@@ -16,7 +16,7 @@ const sleep = sec => new Promise(resolve => setTimeout(resolve, sec*1000))
 
 const arr = [...Array(1000)]
 
-const iterate = async => {
+const iterate = async () => {
 	for(const v of nqdm(arr)){
 		await sleep(0.05)
 	}
