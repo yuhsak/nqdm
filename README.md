@@ -68,7 +68,7 @@ for(const v of nqdm(arr, {callback: cb})){
 
 ### silent
 
-Nqdm will display nothing when set this option to true. (designed to use with callback option.)
+nqdm will display nothing when set this option to true. (designed to use with callback function.)
 
 ```js
 for(const v of nqdm(arr, {silent: true})){
