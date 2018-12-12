@@ -1,5 +1,5 @@
 # nqdm
-Simple progress indicator
+Simple progress indicator made for *for~of* statements.
 
 ## Installation
 
