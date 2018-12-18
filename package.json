@@ -1,6 +1,6 @@
 {
   "name": "nqdm",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Simple progress indicator made for for~of statements.",
   "keywords": ["tqdm", "progress", "indicator", "for", "iterate", "iterator"],
   "main": "main.js",
