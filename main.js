@@ -31,7 +31,7 @@ const format = (current, total, ratio, elapsed, remain, perSec, width) => {
 	return `${_percentile} ${bar} ${_time} ${_perSec}`
 }
 
-const nqdm = (entity, {length, callback, silent, dist='stdout'}={}) => {
+const nqdm = (entity, {length, callback, silent, dest='stdout'}={}) => {
 	const iterator = entity[Symbol.iterator]()
 	const startedAt = new Date().getTime()
 	const total = length || entity.length
@@ -42,10 +42,10 @@ const nqdm = (entity, {length, callback, silent, dist='stdout'}={}) => {
 		const _elapsed = elapsed(now, startedAt)
 		const _remain = total ? remain(current, total, now, startedAt) : null
 		const _perSec = perSec(current, now, startedAt)
-		const _dist = dist == 'stdout' ? process.stdout : dist == 'stderr' ? process.stderr : null
-		const width = _dist ? _dist.columns : null
+		const _dest = dest == 'stdout' ? process.stdout : dest == 'stderr' ? process.stderr : null
+		const width = _dest ? _dest.columns : null
 		;callback && callback({current, total, ratio: _ratio, elapsed: _elapsed, remain: _remain, perSec: _perSec})
-		;(!silent && _dist) && _dist.write(`\r${format(current, total, _ratio, _elapsed, _remain, _perSec, width)}`)
+		;(!silent && _dest) && _dest.write(`\r${format(current, total, _ratio, _elapsed, _remain, _perSec, width)}`)
 		current++
 		return iterator.next()
 	}})}

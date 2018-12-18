@@ -51,13 +51,24 @@ for(const v of nqdm(g, {length: 100})){
 }
 ```
 
+### dest
+
+Choose where to write progress indicator 'stdout' or 'stderr', another value will be ignored.  
+Defaults to be 'stdout'.
+
+```js
+for(const v of nqdm(arr, {dest: 'stderr'})){
+	// now nqdm will write the progress into process.stderr
+}
+```
+
 ### callback
 
 You can define your own callback function being called per iteration.
 
 ```js
-const cb = (current, total, startedAt) => {
-	console.log( `${(current/total).toFixed(2)}% done.` ) 
+const cb = ({current, total, ratio, elapsed, remain, perSec}) => {
+	console.log({current, total, ratio, elapsed, remain, perSec})
 }
 
 for(const v of nqdm(arr, {callback: cb})){
