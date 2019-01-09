@@ -1,6 +1,8 @@
 # nqdm
 Simple terminal progress indicator made for any loop
 
+![Animation](https://raw.githubusercontent.com/Yuhsak/nqdm/images/nqdm.gif)
+
 ## Installation
 
 ```sh
