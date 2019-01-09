@@ -31,24 +31,34 @@ const format = (current, total, ratio, elapsed, remain, perSec, width) => {
 	return `${_percentile} ${bar} ${_time} ${_perSec}`
 }
 
+const hasIterationProtocol = variable => variable !== null && variable !== undefined && Symbol.iterator in Object(variable)
+
+function* infiniter() { while(true){ yield null } }
+function* limitter(n) { for(let i=0;i<n;i++){ yield i } }
+
 const nqdm = (entity, {length, callback, silent, dest='stdout'}={}) => {
-	const iterator = entity[Symbol.iterator]()
+	const _entity = hasIterationProtocol(entity) ? entity : Number.isInteger(entity) ? Object.assign(limitter(entity), {length: entity}) : infiniter()
+	const iterator = _entity[Symbol.iterator]()
 	const startedAt = new Date().getTime()
-	const total = length || entity.length
+	const total = length || _entity.length
 	let current = 0
-	return {[Symbol.iterator]: () => ({next: () => {
-		const now = new Date().getTime()
-		const _ratio = total ? ratio(current, total) : 1.0
-		const _elapsed = elapsed(now, startedAt)
-		const _remain = total ? remain(current, total, now, startedAt) : null
-		const _perSec = perSec(current, now, startedAt)
-		const _dest = dest == 'stdout' ? process.stdout : dest == 'stderr' ? process.stderr : null
-		const width = _dest ? _dest.columns : null
-		;callback && callback({current, total, ratio: _ratio, elapsed: _elapsed, remain: _remain, perSec: _perSec})
-		;(!silent && _dest) && _dest.write(`\r${format(current, total, _ratio, _elapsed, _remain, _perSec, width)}`)
-		current++
-		return iterator.next()
-	}})}
+	const iterable = {
+		[Symbol.iterator]: () => ({next: () => {
+			const now = new Date().getTime()
+			const _ratio = total ? ratio(current, total) : 1.0
+			const _elapsed = elapsed(now, startedAt)
+			const _remain = total ? remain(current, total, now, startedAt) : null
+			const _perSec = perSec(current, now, startedAt)
+			const _dest = dest == 'stdout' ? process.stdout : dest == 'stderr' ? process.stderr : null
+			const width = _dest ? _dest.columns : null
+			;callback && callback({current, total, ratio: _ratio, elapsed: _elapsed, remain: _remain, perSec: _perSec})
+			;(!silent && _dest) && _dest.write(`\r${format(current, total, _ratio, _elapsed, _remain, _perSec, width)}`)
+			current++
+			return iterator.next()
+		}})
+	}
+	iterable.process = iterable[Symbol.iterator]().next
+	return iterable
 }
 
 module.exports = nqdm

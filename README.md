@@ -1,5 +1,5 @@
 # nqdm
-Simple progress indicator made for *for~of* statements.
+Simple terminal progress indicator made for any loop
 
 ## Installation
 
@@ -9,26 +9,52 @@ npm install nqdm
 
 ## Usage
 
+### With iterable objects
+
 ```js
 const nqdm = require('nqdm')
 
-const sleep = sec => new Promise(resolve => setTimeout(resolve, sec*1000))
-
+// Array, Generator, etc..
 const arr = [...Array(1000)]
 
-const iterate = async () => {
-	for(const v of nqdm(arr)){
-		await sleep(0.05)
-	}
+for(const v of nqdm(arr)) {
+	// do something
 }
-
-iterate()
 ```
 
 Results:
 
 ```sh
-  4.70% [=====>                                                                  ] 00:00:04 00:01:37 [19.72 iter/sec]
+  4.70% [=====>                                                            ] 00:00:04 00:01:37 [1923.72 iter/sec]
+```
+
+### Specify times of iteration instead of iterables
+
+```js
+for(const i of nqdm(300)) {
+	// do something
+}
+```
+
+Results:
+
+```sh
+  4.70% [=====>                                                            ] 00:00:04 00:01:37 [1923.72 iter/sec]
+```
+
+### Manualy process
+
+```js
+const prgrs = nqdm()
+while(true) {
+	prgrs.process()
+}
+```
+
+Results:
+
+```sh
+  327 [=============================================================================] 00:00:04 [2089.72 iter/sec]
 ```
 
 ## Options
@@ -53,11 +79,11 @@ for(const v of nqdm(g, {length: 100})){
 
 ### dest
 
-Choose where to write progress indicator 'stdout' or 'stderr', another value will be ignored.  
+Choose where to write progress indicator ('stdout' or 'stderr'), another value will be ignored.  
 Defaults to be 'stdout'.
 
 ```js
-for(const v of nqdm(arr, {dest: 'stderr'})){
+for(const v of nqdm(arr, {dest: 'stderr'})) {
 	// now nqdm will write the progress into process.stderr
 }
 ```
@@ -71,7 +97,7 @@ const cb = ({current, total, ratio, elapsed, remain, perSec}) => {
 	console.log({current, total, ratio, elapsed, remain, perSec})
 }
 
-for(const v of nqdm(arr, {callback: cb})){
+for(const v of nqdm(arr, {callback: cb})) {
 	// do something
 }
 
@@ -82,7 +108,7 @@ for(const v of nqdm(arr, {callback: cb})){
 nqdm will display nothing when set this option to true. (designed to use with callback function.)
 
 ```js
-for(const v of nqdm(arr, {silent: true})){
+for(const v of nqdm(arr, {silent: true})) {
 	// now nqdm displays nothing.
 }
 ```

@@ -1,8 +1,8 @@
 {
   "name": "nqdm",
-  "version": "1.2.0",
-  "description": "Simple progress indicator made for for~of statements.",
-  "keywords": ["tqdm", "progress", "indicator", "for", "iterate", "iterator"],
+  "version": "1.3.0",
+  "description": "Simple terminal progress indicator made for any loop",
+  "keywords": ["tqdm", "progress", "indicator", "for", "iterate", "iterator", "loop"],
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
