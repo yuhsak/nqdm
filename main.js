@@ -23,7 +23,7 @@ const formatBar = (barLength, ratio) => ([...Array(Math.max(Math.round(barLength
 const format = (current, total, ratio, elapsed, remain, perSec, width) => {
 	const _percentile = total ? formatPercentile(ratio) : `${current}`
 	const _elapsed = formatMsec(elapsed)
-	const _remain = remain ? ' '+ formatMsec(remain) : ''
+	const _remain = remain!=null ? ' '+ formatMsec(remain) : ''
 	const _time = _elapsed + _remain
 	const _perSec = `[${perSec.toFixed(2)} iter/sec]`
 	const barLength = width - (_percentile.length + _elapsed.length + _remain.length + _perSec.length + 5)
