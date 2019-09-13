@@ -1,6 +1,6 @@
 {
   "name": "nqdm",
-  "version": "1.4.0",
+  "version": "2.0.0",
   "description": "Simple terminal progress indicator made for any loop",
   "keywords": [
     "tqdm",
@@ -12,8 +12,17 @@
     "loop"
   ],
   "main": "main.js",
+  "types": "lib/main.d.ts",
+  "files": [
+    "main.js",
+    "package.json",
+    "README.md",
+    "LICENSE",
+    "lib"
+  ],
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
   },
   "author": "Yuhsak Inoue",
   "license": "MIT",
