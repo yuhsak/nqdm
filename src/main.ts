@@ -109,9 +109,9 @@ const nqdmForUndefined = (options:NqdmOptions={}) => {
 
 	const entity = infiniter()
 	const iterator = entity[Symbol.iterator]()
-
+	
 	const startedAt = new Date().getTime()
-	const total = length
+	const total = isNumber(length) ? length-1 : undefined
 
 	const iterable:Iterable<undefined>&{process: ()=>IteratorResult<undefined, any>} = {
 		[Symbol.iterator]: () => ({next: nextFactory(iterator, startedAt, total, callback, silent, dest)}),
@@ -144,7 +144,9 @@ export type HandlerType<T> =
 	T extends Generator<any> ? T :
 	Iterable<T>
 
-const nqdm = <T extends undefined|number|IterFunc|Array<any>|Generator<any>=undefined>(entity?: T, options:NqdmOptions={}): HandlerType<T> => {
+export function nqdm(options?: NqdmOptions): HandlerType<undefined>
+export function nqdm<T extends undefined|number|IterFunc|Array<any>|Generator<any>=undefined>(entity: T, options?: NqdmOptions): HandlerType<T>
+export function nqdm<T extends undefined|number|IterFunc|Array<any>|Generator<any>=undefined>(entity?: T, options: NqdmOptions={}){
 	if (isNumber(entity)){
 		return <HandlerType<T>>nqdmForNumber(entity, options)
 	} else if (hasIterationProtocol(entity)) {
@@ -152,7 +154,7 @@ const nqdm = <T extends undefined|number|IterFunc|Array<any>|Generator<any>=unde
 	} else if (isFunction(entity)) {
 		return <HandlerType<T>>nqdmForIterFunction(entity, options)
 	} else {
-		return <HandlerType<T>>nqdmForUndefined(options)
+		return <HandlerType<T>>nqdmForUndefined(entity as NqdmOptions)
 	}
 }
 

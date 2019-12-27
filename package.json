@@ -1,6 +1,6 @@
 {
   "name": "nqdm",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Simple terminal progress indicator made for any loop",
   "keywords": [
     "tqdm",
@@ -31,7 +31,7 @@
     "url": "https://github.com/Yuhsak/nqdm.git"
   },
   "devDependencies": {
-    "@types/node": "^12.7.5",
-    "typescript": "^3.6.3"
+    "@types/node": "^13.1.1",
+    "typescript": "^3.7.4"
   }
 }
