@@ -145,10 +145,11 @@ export type HandlerType<T> =
 	Iterable<T>
 
 export function nqdm(options?: NqdmOptions): HandlerType<undefined>
-export function nqdm<T extends undefined|number|IterFunc|Array<any>|Generator<any>=undefined>(entity: T, options?: NqdmOptions): HandlerType<T>
+export function nqdm(entity: number, options?: NqdmOptions): HandlerType<number>
+export function nqdm<T extends undefined|IterFunc|Array<any>|Generator<any>=undefined>(entity: T, options?: NqdmOptions): HandlerType<T>
 export function nqdm<T extends undefined|number|IterFunc|Array<any>|Generator<any>=undefined>(entity?: T, options: NqdmOptions={}){
 	if (isNumber(entity)){
-		return <HandlerType<T>>nqdmForNumber(entity, options)
+		return <HandlerType<number>>nqdmForNumber(entity, options)
 	} else if (hasIterationProtocol(entity)) {
 		return <HandlerType<T>>nqdmForIterable(entity, options)
 	} else if (isFunction(entity)) {

@@ -1,6 +1,6 @@
 {
   "name": "nqdm",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Simple terminal progress indicator made for any loop",
   "keywords": [
     "tqdm",
